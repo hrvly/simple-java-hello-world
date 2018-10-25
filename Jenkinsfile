@@ -50,14 +50,14 @@ spec:
         }
       }
     }
-    stage('Create Docker imgage') {
+    stage('Create Docker image') {
       steps {
         container('docker') {
           sh 'docker build -t my-app:$BUILD_NUMBER .'
         }
       }
     }
-    stage('Run Docker imgage') {
+    stage('Run Docker image') {
       steps {
         container('docker') {
           sh 'docker run -t my-app:$BUILD_NUMBER'
@@ -65,4 +65,9 @@ spec:
       }
     }
   }
+  post {
+    always {
+      junit 'target/surefire-reports/*.xml'
+    }
+   }
 }
