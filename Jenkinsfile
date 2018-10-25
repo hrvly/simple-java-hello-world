@@ -50,5 +50,12 @@ spec:
         }
       }
     }
+    stage('Create Docker imgage') {
+      steps {
+        container('maven') {
+          sh 'docker build -t my-app:$BUILD_NUMBER .'
+        }
+      }
+    }
   }
 }
