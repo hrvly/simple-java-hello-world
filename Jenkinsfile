@@ -51,6 +51,12 @@ spec:
       }
     }
     stage('Create Docker image') {
+      when {
+        anyOf {
+          branch 'master';
+          branch 'develop'
+        }
+      }
       steps {
         container('docker') {
           sh 'docker build -t my-app:$BUILD_NUMBER .'
@@ -58,6 +64,9 @@ spec:
       }
     }
     stage('Run Docker image') {
+      when {
+        branch 'master';
+      }
       steps {
         container('docker') {
           sh 'docker run -t my-app:$BUILD_NUMBER'
